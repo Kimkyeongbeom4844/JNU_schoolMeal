@@ -1,22 +1,25 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useRecoilState, useResetRecoilState } from "recoil";
-import { MenuState } from "../state/atom";
+import { MenuState, DayListState } from "../state/atom";
 import produce from "immer";
-import { Container } from "react-bootstrap";
+import { Container, Carousel } from "react-bootstrap";
+import styled from "styled-components";
+import MealList from "../component/MealList";
 
-const dayList = {
-  0: "월요일",
-  1: "화요일",
-  2: "수요일",
-  3: "목요일",
-  4: "금요일",
-  5: "토요일",
-  6: "일요일",
-};
+const BoldOrange = styled(Container)`
+  background-color: #f57f17;
+`;
+
+const CarouselItem = styled(Carousel.Item)`
+  /* background-color: red; */
+`;
 
 const MealPage = () => {
   const [menu, setMenu] = useRecoilState(MenuState);
+  const [dayList, setDayList] = useRecoilState(DayListState);
   const resetMenuState = useResetRecoilState(MenuState);
+  const [today, setToday] = useState(new Date());
+
   useEffect(() => {
     fetch(
       `http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/html`
@@ -48,14 +51,26 @@ const MealPage = () => {
             저녁: bringMenu[2].trim(),
             요일: count,
           });
-          console.log(...arr);
           count++;
           criterionStart = word.indexOf("특식", criterionStart) + 2;
           criterionEnd = word.indexOf("양식", criterionEnd) + 2;
         }
+        // console.log(arr);
+        // console.log(new Date().getDay());
+        let arr2 = [];
+        let arr3 = [];
+        arr.map((v, i) => {
+          if (v.요일 < new Date().getDay()) {
+            arr2.push(v);
+          } else {
+            arr3.push(v);
+          }
+        });
+        // console.log(arr2, arr3);
+        // console.log(arr3.concat(...arr2));
         setMenu(
           produce(menu, (draft) => {
-            draft.push(...arr);
+            draft.push(...arr3.concat(...arr2));
           })
         );
       });
@@ -64,40 +79,28 @@ const MealPage = () => {
   }, []);
 
   return (
-    <Container fluid="xl">
-      <div className="d-flex justify-content-around">
-        <div className="flex-shrink-0">
-          <h1 className="text-center">점심</h1>
-          <ul>
-            {menu.map((v, i) => (
-              <>
-                <hr />
-                {v.점심.split(" ").map((v, i) => (
-                  <>
-                    <li>{v}</li>
-                  </>
-                ))}
-              </>
-            ))}
-          </ul>
+    <>
+      <BoldOrange fluid>
+        <Container fluid="xl" className="d-flex mb-3 justify-content-between">
+          <h1 className="pt-4 pb-5 fw-bold">오늘의 학식🍚</h1>
+          <h1 className="pt-4 pb-5 fw-bold">
+            {today.getFullYear()}-{today.getMonth() + 1}-{today.getDate()} (
+            {dayList[today.getDay()]})
+          </h1>
+        </Container>
+      </BoldOrange>
+      <Container fluid="xxl" className="border rounded py-3">
+        <div className="d-flex justify-content-around pb-4">
+          <div className="flex-shrink-0">
+            <h1 className="text-center fw-bolder">점심🕛</h1>
+          </div>
+          <div className="flex-shrink-0">
+            <h1 className="text-center fw-bolder">저녁🕠</h1>
+          </div>
         </div>
-        <div className="flex-shrink-0">
-          <h1>저녁</h1>
-          <ul>
-            {menu.map((v, i) => (
-              <>
-                <hr />
-                {v.저녁.split(" ").map((v, i) => (
-                  <>
-                    <li>{v}</li>
-                  </>
-                ))}
-              </>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </Container>
+        <MealList />
+      </Container>
+    </>
   );
 };
 
