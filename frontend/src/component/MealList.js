@@ -14,7 +14,7 @@ const MealList = () => {
           <h2 className="d-flex justify-content-center pb-4">
             {dayList[v.요일]}요일
           </h2>
-          <div className="d-flex justify-content-evenly">
+          <div className="d-flex justify-content-around">
             <div>
               {v.점심.split(" ").map((v, i) => (
                 <h4 className="fw-bold">{v}</h4>

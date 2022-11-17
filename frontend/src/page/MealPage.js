@@ -10,10 +10,6 @@ const BoldOrange = styled(Container)`
   background-color: #f57f17;
 `;
 
-const CarouselItem = styled(Carousel.Item)`
-  /* background-color: red; */
-`;
-
 const MealPage = () => {
   const [menu, setMenu] = useRecoilState(MenuState);
   const [dayList, setDayList] = useRecoilState(DayListState);
