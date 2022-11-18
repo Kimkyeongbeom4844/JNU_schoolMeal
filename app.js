@@ -9,13 +9,10 @@ dotenv.config();
 app.use(morgan("short"));
 app.use(
   cors({
-    origin: true,
+    origin: "https://jnu-school-meal.vercel.app",
+    credentials: true,
   })
 );
 app.use("/html", html);
 
-app.listen(process.env.EXPRESS_APP_PORT, process.env.EXPRESS_APP_HOST, () => {
-  console.log(
-    `app is running on http://${process.env.EXPRESS_APP_HOST}:${process.env.EXPRESS_APP_PORT}`
-  );
-});
+app.listen(process.env.PORT || 8080);
