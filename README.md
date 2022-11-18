@@ -1,10 +1,10 @@
 # 토이프로젝트 2편
 
-## 🔎Introduce
+## 🔎<b>Introduce
 
 React와 NodeJS를 이용한 제주대학교 주간학식 안내서비스입니다
 
-## ⛏ Development Environment
+## ⛏ <b>Development Environment
 
 - ### Front-End
 
@@ -16,7 +16,17 @@ React와 NodeJS를 이용한 제주대학교 주간학식 안내서비스입니�
   <b>NodeJS</b>
   - express, dotenv, morgan, cors, request, cheerio, nodemon
 
-## 👨‍💻 Developers
+## 🚀<b>Deploy
+
+- ### Front-End
+
+  <b>Vercel</b>
+
+- ### Back-End
+
+  <b>Heroku</b>
+
+## 👨‍💻<b>Developers
 
 - 김경범
 
