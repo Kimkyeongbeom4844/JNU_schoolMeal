@@ -5,6 +5,7 @@ const cors = require("cors");
 const html = require("./router/html");
 const app = express();
 dotenv.config();
+const port = process.env.PORT || 8080;
 
 app.use(morgan("short"));
 app.use(
@@ -15,4 +16,4 @@ app.use(
 );
 app.use("/html", html);
 
-app.listen(process.env.PORT || 8080);
+app.listen(port);
