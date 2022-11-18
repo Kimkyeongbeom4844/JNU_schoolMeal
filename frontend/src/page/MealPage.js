@@ -17,9 +17,7 @@ const MealPage = () => {
   const [today, setToday] = useState(new Date());
 
   useEffect(() => {
-    fetch(
-      `http://${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/html`
-    )
+    fetch(`https://jnumealserver.herokuapp.com/html`)
       .then((res) => res.json())
       .then((data) => {
         const word = data.trim().replace(/\ /g, "");
