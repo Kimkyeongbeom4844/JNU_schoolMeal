@@ -4,64 +4,63 @@ import produce from "immer";
 import { useRecoilState, useResetRecoilState, useRecoilValue } from "recoil";
 import { MenuState, DayListState } from "../state/atom";
 import LoadEffect from "./LoadEffect";
+import { getMenu } from "../api/api";
 
 const MealList = () => {
   const [menu, setMenu] = useRecoilState(MenuState);
   const dayList = useRecoilValue(DayListState);
   const resetMenuState = useResetRecoilState(MenuState);
-  // "http://127.0.0.1:8080/html"
+
   useEffect(() => {
-    fetch("https://jnumeal.herokuapp.com/html")
-      .then((res) => res.json())
-      .then((data) => {
-        const word = data.trim().replace(/\ /g, "");
-        let criterionStart = 0;
-        let criterionEnd = 0;
-        const arr = [];
-        let count = 1;
-        while (
-          word.indexOf("특식", criterionStart) !== -1 &&
-          word.indexOf("양식", criterionEnd) !== -1
-        ) {
-          const bringMenu = word
-            .slice(
-              word.indexOf("특식", criterionStart),
-              word.indexOf("양식", criterionEnd)
-            )
-            .replace(/\n/gi, " ")
-            .trim()
-            .replace(/\  /gi, "$")
-            .split("$");
-          // console.log(bringMenu[1].split(" "));
-          // console.log(bringMenu[2].trim().split(" "));
-          arr.push({
-            점심: bringMenu[1],
-            저녁: bringMenu[2].trim(),
-            요일: count,
-          });
-          count++;
-          criterionStart = word.indexOf("특식", criterionStart) + 2;
-          criterionEnd = word.indexOf("양식", criterionEnd) + 2;
-        }
-        // console.log(arr);
-        // console.log(new Date().getDay());
-        let arr2 = [];
-        let arr3 = [];
-        arr.map((v, i) => {
-          if (v.요일 < new Date().getDay()) {
-            arr2.push(v);
-          } else {
-            arr3.push(v);
-          }
+    getMenu().then((data) => {
+      const word = data.trim().replace(/\ /g, "");
+      let criterionStart = 0;
+      let criterionEnd = 0;
+      const arr = [];
+      let count = 1;
+      while (
+        word.indexOf("특식", criterionStart) !== -1 &&
+        word.indexOf("양식", criterionEnd) !== -1
+      ) {
+        const bringMenu = word
+          .slice(
+            word.indexOf("특식", criterionStart),
+            word.indexOf("양식", criterionEnd)
+          )
+          .replace(/\n/gi, " ")
+          .trim()
+          .replace(/\  /gi, "$")
+          .split("$");
+        // console.log(bringMenu[1].split(" "));
+        // console.log(bringMenu[2].trim().split(" "));
+        arr.push({
+          점심: bringMenu[1],
+          저녁: bringMenu[2].trim(),
+          요일: count,
         });
-        // console.log(arr2, arr3);
-        // console.log(arr3.concat(...arr2));
-        setMenu(
-          produce(menu, (draft) => {
-            draft.push(...arr3.concat(...arr2));
-          })
-        );
+        count++;
+        criterionStart = word.indexOf("특식", criterionStart) + 2;
+        criterionEnd = word.indexOf("양식", criterionEnd) + 2;
+      }
+      // console.log(arr);
+      // console.log(new Date().getDay());
+      let arr2 = [];
+      let arr3 = [];
+      arr.map((v, i) => {
+        if (v.요일 < new Date().getDay()) {
+          arr2.push(v);
+        } else {
+          arr3.push(v);
+        }
       });
+      // console.log(arr2, arr3);
+      // console.log(arr3.concat(...arr2));
+      setMenu(
+        produce(menu, (draft) => {
+          draft.push(...arr3.concat(...arr2));
+        })
+      );
+    });
 
     return resetMenuState;
   }, []);
