@@ -1,15 +1,13 @@
 import React, { useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { DayListState } from "../state/atom";
 import { Container } from "react-bootstrap";
 import MealList from "../component/MealList";
 import Footer from "../component/Footer";
 import { BoldOrange } from "../style/Style";
-import LoadEffect from "../component/LoadEffect";
-// const MealList = lazy(() => import("../component/MealList"));
 
 const MealPage = () => {
-  const [dayList, setDayList] = useRecoilState(DayListState);
+  const dayList = useRecoilValue(DayListState);
   const [today, setToday] = useState(new Date());
 
   return (
