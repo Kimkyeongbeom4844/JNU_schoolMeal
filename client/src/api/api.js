@@ -4,7 +4,7 @@ export const getMenu = () =>
   );
 
 export const testApi = () =>
-  fetch("http://192.168.1.19:8000/login", {
+  fetch("https://kingbeom.herokuapp.com/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
