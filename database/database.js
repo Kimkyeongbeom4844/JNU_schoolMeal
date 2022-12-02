@@ -16,7 +16,6 @@ const infiniteConnect = db.connect((err, ok) => {
   } else {
     setInterval(function () {
       db.query("SELECT 1");
-      console.log("aa");
     }, 5000);
   }
 });
