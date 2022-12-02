@@ -31,14 +31,14 @@ router
           return res.send(err);
         }
         res.cookie("access_token", token, {
-          domain: "jnu-school-meal.vercel.app",
+          // domain: "jnu-school-meal.vercel.app",
           httpOnly: true,
           signed: true,
           secure: true,
           sameSite: "none",
         });
         res.cookie("refresh_token", refresh, {
-          domain: "jnu-school-meal.vercel.app",
+          // domain: "jnu-school-meal.vercel.app",
           httpOnly: true,
           signed: true,
           secure: true,
