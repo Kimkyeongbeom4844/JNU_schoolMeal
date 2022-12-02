@@ -9,8 +9,17 @@ const db = mysql.createConnection({
   database: process.env.EXPRESS_APP_DATABASE,
 });
 
-db.connect((err, ok) => {
-  err ? console.log(err) : console.log("db connect success");
+const infiniteConnect = db.connect((err, ok) => {
+  if (err) {
+    console.log(err);
+    infiniteConnect;
+  } else {
+    setInterval(function () {
+      db.query("SELECT 1");
+      console.log("aa");
+    }, 5000);
+  }
 });
+infiniteConnect;
 
 module.exports = db;
