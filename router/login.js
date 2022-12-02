@@ -10,6 +10,7 @@ router
   })
   .post((req, res) => {
     console.log(req.body);
+    db.connect();
     db.query(
       `select id,password from user where email='${req.body.email}'`,
       (err, ok) => {
