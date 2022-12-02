@@ -14,7 +14,7 @@ router
       (err, ok) => {
         if (err) {
           console.log(err);
-          return res.status(409).json({ message: `이미 등록된 유저입니다.` });
+          return res.status(409).json(err);
         }
         console.log(ok);
         return res.json({ message: `회원가입 되었습니다.` });
