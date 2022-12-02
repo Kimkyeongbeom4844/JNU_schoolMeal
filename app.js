@@ -21,7 +21,7 @@ const port = process.env.PORT || 8000;
 app.use(morgan("short"));
 app.use(
   cors({
-    origin: true,
+    origin: "https://jnu-school-meal.vercel.app",
     credentials: true,
   })
 );
