@@ -16,7 +16,7 @@ const user = require("./router/user");
 const app = express();
 app.use(cookieParser(process.env.EXPRESS_APP_PRIMARY_KEY));
 
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 3000;
 // "https://jnu-school-meal.vercel.app"
 app.use(morgan("short"));
 app.use(
