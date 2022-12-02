@@ -4,4 +4,16 @@ export const getMenu = () =>
   );
 
 export const testApi = () =>
-  fetch("https://jnumeal.herokuapp.com/html").then((res) => res.json());
+  fetch("http://192.168.1.19:8000/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: "1111@naver.com",
+      password: "1111",
+    }),
+    credentials: "include",
+  })
+    .then((res) => res.json())
+    .catch((err) => console.log(err));
