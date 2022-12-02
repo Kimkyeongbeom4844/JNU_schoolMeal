@@ -4,7 +4,7 @@ import produce from "immer";
 import { useRecoilState, useResetRecoilState, useRecoilValue } from "recoil";
 import { MenuState, DayListState } from "../state/atom";
 import LoadEffect from "./LoadEffect";
-import { getMenu } from "../api/api";
+import { getMenu, testApi } from "../api/api";
 
 const MealList = () => {
   const [menu, setMenu] = useRecoilState(MenuState);
@@ -62,6 +62,7 @@ const MealList = () => {
       );
     });
 
+    testApi().then((data) => console.log(data));
     return resetMenuState;
   }, []);
 
